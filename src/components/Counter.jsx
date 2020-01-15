@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const Counter = () => {
   const [count, setCount] = useState(0);
   const [name, setName] = useState("");
+  const [time, setTime] = useState("");
+
 
   useEffect(() => {
-    // document.title = `You clicked ${count} times.`;
-    // console.log(state)
+    axios
+      .get("http://worldclockapi.com/api/json/est/now")
+      .then(response => {
+        // console.log(response.data);
+        setTime(response.data);
+      });
   });
 
   return (
@@ -21,6 +28,7 @@ const Counter = () => {
         </label>
       </form>
       <p>Your Name is {name}</p>
+      <p>The time is {time.currentDateTime}</p>
     </div>
   );
 };

@@ -3,12 +3,10 @@ import axios from "axios";
 
 const TodosIndex = () => {
   const [data, setData] = useState(null);
-  const [todos, setTodos] = useState(null)
-
-  // const { posts } = data;
+  const [todos, setTodos] = useState(null);
 
   const onClickAxios = async e => {
-    const res = await axios.get("http://jsonplaceholder.typicode.com/posts/1");
+    // const res = await axios.get("http://jsonplaceholder.typicode.com/posts/1");
     // console.log(res);
     // setData({ ...data, posts: res });
   };
@@ -29,11 +27,11 @@ const TodosIndex = () => {
   //   fetchData();
   // })
 
-    useEffect(() => {
-      axios
-        .get("http://jsonplaceholder.typicode.com/posts/2")
-        .then(response => console.log(response))
-    })
+  useEffect(() => {
+    axios
+      .get("http://jsonplaceholder.typicode.com/posts")
+      .then(response => setData(response.data))
+  })
 
   //rewrite this with a promise ^^
 
@@ -44,10 +42,11 @@ const TodosIndex = () => {
       <br />
       <button onClick={e => onClickFetch(e)}>Click Me Fetch</button>
       <div>Todo Title: {!todos ? null : todos.title}</div>
-      <div>Data: {!data ? null : data.title}</div>
+      <div>Data: {!data ? null : data.map(post => {
+        return <li key={post.id}>{post.title}</li>
+      })}</div>
 
-      {/* {fetchResponse.title} */}
-      {/* {posts.title} */}
+
     </div>
   );
 };
